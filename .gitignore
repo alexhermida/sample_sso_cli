@@ -1,0 +1,14 @@
+*~
+*.pyc
+*.egg-info
+/.tox
+.DS_STORE
+/.idea
+.python-version
+/test-reports
+/_tox
+/_virtualenv
+/.cache
+/.hypothesis
+.vscode
+.coverage

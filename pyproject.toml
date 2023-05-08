@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sso-cli"
+version = "0.0.1"
+description = "SSO CLI"
+requires-python = ">=3.11"
+dependencies = ["requests", "typer[all]"]
+
+[project.optional-dependencies]
+dev = ["black", "isort", "mypy", "pytest", "ruff", "types-requests"]
+
+[project.scripts]
+sso-cli = "main:app"
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+ignore = []
+# Same as Black.
+line-length = 88
