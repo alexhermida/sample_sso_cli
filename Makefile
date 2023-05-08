@@ -12,7 +12,7 @@ lint: ## Run lint checks
 	isort --check-only $(PKG_SRC) tests
 	ruff $(PKG_SRC) tests
 	black --check $(PKG_SRC) tests
-	mypy --ignore-missing-imports --no-warn-no-return --show-error-codes --allow-redefinition src
+	mypy --ignore-missing-imports --no-warn-no-return --show-error-codes --allow-redefinition --no-namespace-packages src
 
 
 .PHONY: tests
