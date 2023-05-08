@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import time
 import webbrowser
@@ -6,6 +7,10 @@ from dataclasses import asdict, dataclass, is_dataclass
 from pathlib import Path
 
 import requests
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 _TENANT = os.environ["TENANT"]
 _APP_CLIENT_ID = os.environ["APP_CLIENT_ID"]
@@ -117,6 +122,10 @@ def load_credentials():
     try:
         with open(_CREDENTIALS_FILEPATH, "r") as credentials_file:
             return ReceivedCredentials(**json.load(credentials_file))
-    except (FileNotFoundError, json.decoder.JSONDecodeError) as error:
-        print(f"Error loading credentials file {_CREDENTIALS_FILEPATH}: {error}")
-        raise CredentialsError("Error loading credentials file %s: %s ")
+    except (FileNotFoundError, json.decoder.JSONDecodeError) as credentials_error:
+        logger.debug(
+            "Error loading credentials file %s: %s",
+            _CREDENTIALS_FILEPATH,
+            credentials_error,
+        )
+        raise CredentialsError("Error loading credentials file  %s", credentials_error)
