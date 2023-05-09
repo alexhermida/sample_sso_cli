@@ -1,3 +1,15 @@
+"""
+Auth module for handling OAuth device flow
+
+   >>> import auth
+   >>> response = auth.request_device_code()
+   >>> response.device_code
+   0000-1111
+
+Check this module for another functions.
+
+:license: Apache 2.0, see LICENSE for more details.
+"""
 import json
 import logging
 import os
@@ -92,9 +104,10 @@ def _request_access_token(code: str):
     return response
 
 
-def poll_user_verification(code: str) -> ReceivedCredentials | None:
-    polling_interval_seconds = 5
-    time.sleep(polling_interval_seconds)
+def poll_user_verification(
+    code: str, interval_seconds: int
+) -> ReceivedCredentials | None:
+    time.sleep(interval_seconds)
     valid_response = False
 
     while not valid_response:
@@ -106,7 +119,7 @@ def poll_user_verification(code: str) -> ReceivedCredentials | None:
         except requests.HTTPError as http_error:
             if http_error.response.status_code == 403:
                 print("Retrying device code credentials request")
-                time.sleep(polling_interval_seconds)
+                time.sleep(interval_seconds)
             else:
                 raise http_error
 

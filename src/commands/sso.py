@@ -23,8 +23,11 @@ def login(profile: Annotated[str, typer.Argument()] = "default"):
     device_code_info: DeviceCodeResponse = request_device_code()
 
     credentials: ReceivedCredentials | None = poll_user_verification(
-        device_code_info.device_code
+        device_code_info.device_code,
+        device_code_info.interval,
     )
 
     if credentials is not None:
         save_credentials(credentials)
+
+        print("Authentication successful")
